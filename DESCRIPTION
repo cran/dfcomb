@@ -1,7 +1,7 @@
 Package: dfcomb
 Type: Package
 Title: Phase I/II Adaptive Dose-Finding Design for Combination Studies
-Version: 1.0
+Version: 1.0-1
 Date: 2014-11-03
 Author: Marie-Karelle Riviere and Jacques-Henri Jourdan
 Maintainer: Marie-Karelle Riviere <eldamjh@gmail.com>
@@ -16,7 +16,7 @@ Description: Phase I/II adaptive dose-finding design for combination
 License: GPL-3
 Depends: R (>= 3.1.0)
 LinkingTo: BH (>= 1.54), RcppProgress (>= 0.1), Rcpp
-Packaged: 2014-11-05 14:51:24 UTC; jjourdan
+Packaged: 2014-11-07 10:00:01 UTC; jjourdan
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2014-11-06 12:22:55
+Date/Publication: 2014-11-07 17:09:10
