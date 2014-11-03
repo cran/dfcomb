@@ -1,0 +1,3 @@
+useDynLib(dfcomb, .registration = TRUE, .fixes="C_")
+export(logistic_sim, print.logistic_sim)
+export(logistic_next, print.logistic_next)

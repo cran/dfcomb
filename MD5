@@ -1,0 +1,13 @@
+767ff20efa0a09e0789555dc2ea3bdc8 *DESCRIPTION
+80cc49fb407c5b332fa075aae3a975ec *NAMESPACE
+fa5f295b5f2ab641914f56aa22fec692 *R/dfcomb.R
+c090fe8feba58e6809e11132d44322e9 *man/dfcomb-package.Rd
+3affe919d4bb037417f3cecadf19e41c *man/logistic_next.Rd
+b1c64fdc090015d50f1a4f4bfd5bbab9 *man/logistic_sim.Rd
+90fcad7892c4808aba15969d9099cd65 *src/Makevars
+b0c8d6866b5aba2540717fc6b733b728 *src/Makevars.win
+ea2ee005701e7a31cdcab00e89e83d18 *src/arms.c
+ac6bdbaffb24b06ddd1530c6a067d966 *src/arms.h
+c6b4774aa07ffe971890b332839932d7 *src/dfcomb.c
+045ec36ab4cc80e675a9112402718b55 *src/dfcomb.h
+798378b8803a70ab942b46ed0e10db86 *src/logistic.cpp
