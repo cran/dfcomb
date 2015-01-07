@@ -1,22 +1,25 @@
-\name{dfmta-package}
-\alias{dfmta-package}
-\alias{dfmta}
+\name{dfcomb-package}
+\alias{dfcomb-package}
+\alias{dfcomb}
 \docType{package}
 \title{
-Phase I/II Adaptive Dose-Finding Design for Combination Studies
+Phase I and Phase I/II Adaptive Dose-Finding Design for Combination Studies
 }
 \description{
-This package provides functions to run simulations and to determine the MTD 
-combination in on-going trials in the cases of (1) combination of two
-cytotoxic agents, and (2) combination of a molecularly targeted agent with a
-cytotoxic agent.
+This package provides functions to run simulations, and to determine the MTD 
+combination in on-going trials, in the cases of (1) combination of two
+agents where both toxicity and efficacy are assumed to increase with the dose 
+of each agent (e.q. cytotoxic agents), and (2) combination of two agents where
+toxicity is increasing with the dose of each agent, but the efficacy of one 
+agent is increasing whereas the efficacy of the other agent can plateaus (e.g. 
+a cytotoxic agent with a molecularly targeted agent).
 }
 \details{
 \tabular{ll}{
-Package: \tab dfmta\cr
+Package: \tab dfcomb\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2014-10-02\cr
+Version: \tab 2.0\cr
+Date: \tab 2014-12-08\cr
 License: \tab GPL-3\cr
 }
 }

@@ -1,8 +1,8 @@
 Package: dfcomb
 Type: Package
 Title: Phase I/II Adaptive Dose-Finding Design for Combination Studies
-Version: 1.0-1
-Date: 2014-11-03
+Version: 2.0-2
+Date: 2015-01-07
 Author: Marie-Karelle Riviere and Jacques-Henri Jourdan
 Maintainer: Marie-Karelle Riviere <eldamjh@gmail.com>
 Copyright: src/arms.c and src/arms.h are copyright Wally Gilks. All
@@ -15,8 +15,9 @@ Description: Phase I/II adaptive dose-finding design for combination
    combination of a molecularly targeted agent with a cytotoxic agent.
 License: GPL-3
 Depends: R (>= 3.1.0)
-LinkingTo: BH (>= 1.54), RcppProgress (>= 0.1), Rcpp
-Packaged: 2014-11-07 10:00:01 UTC; jjourdan
+LinkingTo: RcppArmadillo (>= 0.4.500), BH (>= 1.54), RcppProgress (>=
+        0.2), Rcpp
+Packaged: 2015-01-24 11:36:10 UTC; jjourdan
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2014-11-07 17:09:10
+Date/Publication: 2015-01-24 15:42:47
