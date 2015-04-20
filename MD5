@@ -1,8 +1,8 @@
-7b7e7c7e0646914c79cdca9c1bd2f618 *DESCRIPTION
+0b443061a86c803aca51b0e98ac3e710 *DESCRIPTION
 3766eb6c353e414c48bf0bf78430aeee *NAMESPACE
 a406d2b7e04e41fa28bdcc78e6d9405a *R/dfcomb.R
 c3cded853a2388ad53569a7105d1c1e3 *cleanup
-1322add1d12d9daf6b71ef8c94d04730 *configure
+00060ccdfcd3ffe46d46cd3d6a137601 *configure
 667163148e6a172f7ef47b1d087ccab1 *configure.ac
 d41d8cd98f00b204e9800998ecf8427e *configure.win
 77883ea77075cacb34ae93abdccd2918 *man/CombIncrease_next.Rd
@@ -40,5 +40,5 @@ ac6bdbaffb24b06ddd1530c6a067d966 *src/arms.h
 b1f56dad4d675daed0c9df4a576977b3 *src/dfcomb.c
 ac6badc505671ca31820b5672fb18622 *src/dfcomb.h
 3d88d9670c3510d0b12877f27a5b9c92 *src/logistic.cpp
-f24a46ded2be7ec8c174f4d9c966fde1 *src/plateau.cpp
+271a619307df3ea2e5f721e6699feb0c *src/plateau.cpp
 62d4c6b5d55207cfac24e4417ccaa1c5 *tools/ax_check_compile_flag.m4
