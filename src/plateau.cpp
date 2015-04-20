@@ -39,7 +39,6 @@ double TARG_SUP, EFF_MIN;
 double TIMEFULL, CYCLE;
 int COHORT_START, COHORT;
 
-
 template<typename T>
 typename T::value_type median(const T& x) {
   if(x.size() == 0)
@@ -216,7 +215,7 @@ bool wait_patient(trial_data& trial_data, const true_data& true_data) {
       if(!((startup_end == -1 && trial_data.pat_incl % COHORT_START == 0) ||
            (startup_end != -1 && (trial_data.pat_incl - startup_end) % COHORT == 0)))
         break;
- 
+
       if(trial_data.pat_incl == 0)
         break;
 
@@ -255,24 +254,16 @@ estimations estimate(const trial_data& trial_data) {
   /* Read usefull data from trial_data */
   int NPatients = trial_data.pat_incl;
 
-  const vec toxicity =
-    conv_to<vec>::from(ivec(trial_data.toxicity.data(), NPatients));
+  const vec toxicity = conv_to<vec>::from(trial_data.toxicity);
 
-  vec dose_tox1 =
-    vec(trial_data.dose1T.data(), ndose1)
-    .elem(uvec(trial_data.dose_adm1.data(), NPatients));
-  vec dose_tox2 =
-    vec(trial_data.dose2T.data(), ndose2)
-    .elem(uvec(trial_data.dose_adm2.data(), NPatients));
+  vec dose_tox1 = vec(trial_data.dose1T).elem(conv_to<uvec>::from(trial_data.dose_adm1));
+  vec dose_tox2 = vec(trial_data.dose2T).elem(conv_to<uvec>::from(trial_data.dose_adm2));
 
-  vec dose_prog1 =
-    vec(trial_data.dose1E.data(), ndose1)
-    .elem(uvec(trial_data.dose_adm1.data(), NPatients));
+  vec dose_prog1 = vec(trial_data.dose1E).elem(conv_to<uvec>::from(trial_data.dose_adm1));
   vector<vec> dose_prog2_tau;
   for(int tau = 0; tau < ndose2; tau++)
     dose_prog2_tau.push_back(
-      vec(trial_data.dose2E.data(), ndose2)
-      .elem(clamp(uvec(trial_data.dose_adm2.data(), NPatients), 0, tau)));
+      vec(trial_data.dose2E).elem(clamp(conv_to<uvec>::from(trial_data.dose_adm2), 0, tau)));
 
   vec time_min_prog(NPatients), progression(NPatients);
   for(unsigned pat = 0; pat < NPatients; pat++) {
@@ -341,7 +332,7 @@ estimations estimate(const trial_data& trial_data) {
   }
 
   int n_samp = params_draws_list.size();
-  
+
   /* Estimations */
   estimations result(ndose1, ndose2);
   result.tox_params.beta0 = median(m.getNode(tox_params.beta0).history);
@@ -366,7 +357,7 @@ estimations estimate(const trial_data& trial_data) {
       vector<double> dose2E_tau;
       for(int tau = 0; tau < ndose2; tau++)
         dose2E_tau.push_back(trial_data.dose2E[min(tau, d2)]);
-    
+
       for(auto draw : params_draws_list){
         double proba_tox;
         draw.second.proba_tox(trial_data.dose1T[d1], trial_data.dose2T[d2],
@@ -456,7 +447,7 @@ pair<int, int> find_next_dose(trial_data& trial_data, double c_tox, double c_eff
 
         if(!admissible[d1][d2])
           continue;
-          
+
         if(npat[d1][d2] == 0 ||
            (npat[d1][d2] <= COHORT_START && 3*ntox[d1][d2] >= COHORT_START))
           return make_pair(d1, d2);
