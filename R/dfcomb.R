@@ -176,7 +176,7 @@ print.CombIncrease_sim = function(x, dgt = 2, ...) {
 
 
 
-CombIncrease_next = function(ndose_a1, ndose_a2, target, target_min, target_max, prior_tox_a1, prior_tox_a2, final, 
+CombIncrease_next = function(ndose_a1, ndose_a2, target, target_min, target_max, prior_tox_a1, prior_tox_a2, in_startup = TRUE, final, 
                          pat_incl, dose_adm1, dose_adm2, tite=FALSE, toxicity, time_full=0, time_tox=0, time_follow=0,
                          c_e=0.85, c_d=0.45, c_stop=0.95, n_min){  
                          
@@ -191,7 +191,6 @@ CombIncrease_next = function(ndose_a1, ndose_a2, target, target_min, target_max,
     cdose1 = 0
     cdose2 = 0
   }
-  in_startup = numeric(1)
  
   n_prior_tox_a1 = length(prior_tox_a1)
   if(n_prior_tox_a1 != ndose_a1){
@@ -276,10 +275,11 @@ CombIncrease_next = function(ndose_a1, ndose_a2, target, target_min, target_max,
                 time_follow=time_follow, toxicity=toxicity, in_startup=in_startup, inconc=inconc, pi=pi,
                 ptox_inf=ptox_inf, ptox_inf_targ=ptox_inf_targ, ptox_targ=ptox_targ, ptox_sup_targ=ptox_sup_targ,
                 NAOK=TRUE)
-                
+
   # Reformat outputs       
-  cdose1=cdose1+1
-  cdose2=cdose2+1
+  in_startup = logistic$in_startup
+  cdose1=logistic$cdose1+1
+  cdose2=logistic$cdose2+1
   dose_adm1=dose_adm1+1 
   dose_adm2=dose_adm2+1 
   pi=matrix(logistic$pi, nrow=ndose_a1)
@@ -754,7 +754,8 @@ cohort_start=3, cohort, pat_incl, dose_adm1, dose_adm2, toxicity, time_full, tim
                qeff_min=qeff_min, proba_tau=proba_tau,
                NAOK=TRUE)
                 
-  # Reformat outputs  
+  # Reformat outputs
+  in_startup = plateau$in_startup
   cdose1=plateau$cdose1+1
   cdose2=plateau$cdose2+1
   dose_adm1=plateau$dose_adm1+1 

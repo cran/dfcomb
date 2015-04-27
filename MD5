@@ -1,11 +1,11 @@
-0b443061a86c803aca51b0e98ac3e710 *DESCRIPTION
+ab567f6f05860c9cf2ada427ada49191 *DESCRIPTION
 3766eb6c353e414c48bf0bf78430aeee *NAMESPACE
-a406d2b7e04e41fa28bdcc78e6d9405a *R/dfcomb.R
+b92920f2f8c7cec0a9c0a5026e6ca5f3 *R/dfcomb.R
 c3cded853a2388ad53569a7105d1c1e3 *cleanup
-00060ccdfcd3ffe46d46cd3d6a137601 *configure
+9a9a33814eea8f7bf298b98bd3f04941 *configure
 667163148e6a172f7ef47b1d087ccab1 *configure.ac
 d41d8cd98f00b204e9800998ecf8427e *configure.win
-77883ea77075cacb34ae93abdccd2918 *man/CombIncrease_next.Rd
+6e0608e8aea88bb078ba48fbbc912309 *man/CombIncrease_next.Rd
 934b03c851d6b2b823c931cf3fd16ea3 *man/CombIncrease_sim.Rd
 c0b7cc3802fe982a8bc7e1ae440ef20c *man/CombPlateau_next.Rd
 400c3bab367e989c4c376c3805bc619f *man/CombPlateau_sim.Rd
@@ -39,6 +39,6 @@ ea2ee005701e7a31cdcab00e89e83d18 *src/arms.c
 ac6bdbaffb24b06ddd1530c6a067d966 *src/arms.h
 b1f56dad4d675daed0c9df4a576977b3 *src/dfcomb.c
 ac6badc505671ca31820b5672fb18622 *src/dfcomb.h
-3d88d9670c3510d0b12877f27a5b9c92 *src/logistic.cpp
+4abf5d688aaaae4261e9eeb80210c22a *src/logistic.cpp
 271a619307df3ea2e5f721e6699feb0c *src/plateau.cpp
 62d4c6b5d55207cfac24e4417ccaa1c5 *tools/ax_check_compile_flag.m4

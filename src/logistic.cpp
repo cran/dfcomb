@@ -703,16 +703,18 @@ void logistic_next(int* tite, int* ndose1, int* ndose2,
   }
 
   // Startup
-  if(!*trial_end)
+  if(!*trial_end && *in_startup)
     for(int d = 0; d < NDOSE1 && d < NDOSE2; d++) {
       if(data.y[d][d] > 0)
         break;
       if(data.n[d][d] == 0) {
         *cdose1 = *cdose2 = d;
         *inconc = 0;
+        *in_startup = 1;
         return;
       }
     }
+  *in_startup = 0;
 
   estimation(&data);
   *inconc = newdfrule(&data);

@@ -6,10 +6,10 @@
 \code{CombIncrease_next} is used to determine the next or recommended combination in a phase I combination clinical trial using the design proposed by Riviere et al. entitled "A Bayesian dose-finding design for drug combination clinical trials based on the logistic model".
 }
 \usage{
-CombIncrease_next(ndose_a1, ndose_a2, target, target_min, target_max, 
-prior_tox_a1, prior_tox_a2, final, pat_incl, dose_adm1, dose_adm2, tite=FALSE, 
-toxicity, time_full=0, time_tox=0, time_follow=0, c_e=0.85, c_d=0.45, 
-c_stop=0.95, n_min)
+CombIncrease_next(ndose_a1, ndose_a2, target, target_min, target_max,
+prior_tox_a1, prior_tox_a2, in_startup=TRUE, final, pat_incl,
+dose_adm1, dose_adm2, tite=FALSE, toxicity, time_full=0, time_tox=0,
+time_follow=0, c_e=0.85, c_d=0.45, c_stop=0.95, n_min)
 }
 \arguments{ 
   \item{ndose_a1}{Number of dose levels for agent 1.}
@@ -18,7 +18,13 @@ c_stop=0.95, n_min)
   \item{target_min}{Minimum of the targeted toxicity interval (for dose recommendation).}
   \item{target_max}{Maximum of the targeted toxicity interval (for dose recommendation).}
   \item{prior_tox_a1}{A vector of initial guesses of toxicity probabilities associated with the doses of agent 1. Must be of length \code{ndose_a1}.}
-  \item{prior_tox_a2}{A vector of initial guesses of toxicity probabilities associated with the doses of agent 2. Must be of length \code{ndose_a2}.}
+  \item{prior_tox_a2}{A vector of initial guesses of toxicity
+    probabilities associated with the doses of agent 2. Must be of
+    length \code{ndose_a2}.}
+  \item{in_startup}{A boolean with value FALSE to force the end of the startup
+    phase. If the user uses the diagonal startup phase described in the
+    paper, the function will detect its end automatically. Otherwise,
+    this parameter should be used.}
   \item{final}{A boolean with value TRUE if the trial is finished and the recommended combination for further phases should be given, or FALSE (default value) if the combination determination is performed for the next cohort of patients.}
   \item{pat_incl}{Current number of patients included.}
   \item{dose_adm1}{A vector indicating the dose levels of agents 1 administered to each patient included in the trial. Must be of length \code{pat_incl}.}
