@@ -5,6 +5,11 @@
 #include <algorithm>
 #include <random>
 
+#include <R.h>
+#include <Rcpp.h>
+
+#include <progress.hpp>
+
 #define BOOST_DISABLE_ASSERTS
 
 #include <boost/random/exponential_distribution.hpp>
@@ -13,11 +18,6 @@ extern "C" {
   #include "arms.h"
   #include "dfcomb.h"
 }
-
-#include <R.h>
-#include <Rcpp.h>
-
-#include <progress.hpp>
 
 using namespace std;
 
