@@ -194,70 +194,6 @@ namespace arma {
   }
 }
 
-
-namespace arma {
-
-  template<typename T1, typename T2>
-  arma_inline
-  const eGlue<T1, T2, eglue_schur>
-  schur(const Base<typename T1::elem_type,T1>& X, const Base<typename T1::elem_type,T2>& Y) {
-    arma_extra_debug_sigprint();
-    return eGlue<T1, T2, eglue_schur>(X.get_ref(), Y.get_ref());
-  }
-
-  //! element-wise multiplication of Base objects with different element types
-  template<typename T1, typename T2>
-  inline
-  const mtGlue<typename promote_type<typename T1::elem_type, typename T2::elem_type>::result, T1, T2, glue_mixed_schur>
-  schur
-  (
-   const Base< typename force_different_type<typename T1::elem_type, typename T2::elem_type>::T1_result, T1>& X,
-   const Base< typename force_different_type<typename T1::elem_type, typename T2::elem_type>::T2_result, T2>& Y
-   )
-  {
-    arma_extra_debug_sigprint();
-    typedef typename T1::elem_type eT1;
-    typedef typename T2::elem_type eT2;
-    typedef typename promote_type<eT1,eT2>::result out_eT;
-    promote_type<eT1,eT2>::check();
-    return mtGlue<out_eT, T1, T2, glue_mixed_schur>( X.get_ref(), Y.get_ref() );
-  }
-
-
-  //! Base * scalar
-  template<typename T1>
-  arma_inline
-  const eOp<T1, eop_scalar_times>
-  schur
-  (const Base<typename T1::elem_type,T1>& X, const typename T1::elem_type k)
-  {
-    arma_extra_debug_sigprint();
-    return eOp<T1, eop_scalar_times>(X.get_ref(),k);
-  }
-
-  //! scalar * Base
-  template<typename T1>
-  arma_inline
-  const eOp<T1, eop_scalar_times>
-  schur
-  (const typename T1::elem_type k, const Base<typename T1::elem_type,T1>& X)
-  {
-    arma_extra_debug_sigprint();
-    return eOp<T1, eop_scalar_times>(X.get_ref(),k);  // NOTE: order is swapped
-  }
-
-  double schur(const int x, const double y) { return x * y; }
-  double schur(const double x, const int y) { return x * y; }
-  double schur(const double x, const double y) { return x * y; }
-  double schur(const float x, const double y) { return x * y; }
-  double schur(const double x, const float y) { return x * y; }
-  float schur(const int x, const float y) { return x * y; }
-  float schur(const float x, const int y) { return x * y; }
-  float schur(const float x, const float y) { return x * y; }
-  int schur(const int x, const int y) { return x * y; }
-
-}
-
 namespace arma {
   bool all(const bool x) {
     return x;
@@ -266,6 +202,37 @@ namespace arma {
 
 // Stochastic/Math related functions
 namespace cppbugs {
+
+  template<typename T, typename U>
+  arma_inline
+  auto schur_product(T&& x, U&& y) ->
+    decltype (arma::operator%(std::forward<T>(x), std::forward<U>(y))){
+    return arma::operator%(std::forward<T>(x), std::forward<U>(y));
+  }
+
+  template<typename T>
+  arma_inline
+  auto schur_product(const typename T::elem_type& x, T&& y) ->
+    decltype (arma::operator*(x, std::forward<T>(y))){
+    return arma::operator*(x, std::forward<T>(y));
+  }
+
+  template<typename T>
+  arma_inline
+  auto schur_product(T&& x, const typename T::elem_type& y) ->
+    decltype (arma::operator*(std::forward<T>(x), y)){
+    return arma::operator*(std::forward<T>(x), y);
+  }
+
+  double schur_product(const int x, const double y) { return x * y; }
+  double schur_product(const double x, const int y) { return x * y; }
+  double schur_product(const double x, const double y) { return x * y; }
+  double schur_product(const float x, const double y) { return x * y; }
+  double schur_product(const double x, const float y) { return x * y; }
+  float schur_product(const int x, const float y) { return x * y; }
+  float schur_product(const float x, const int y) { return x * y; }
+  float schur_product(const float x, const float y) { return x * y; }
+  int schur_product(const int x, const int y) { return x * y; }
 
   double dim_size(const double) {
     return 1;
@@ -312,7 +279,8 @@ namespace cppbugs {
 
   template<typename T, typename U, typename V>
   double normal_logp(const T& x, const U& mu, const V& tau) {
-    return arma::accu(0.5f*log_approx(0.5f*tau/arma::math::pi()) - 0.5f * arma::schur(tau, square(x - mu)));
+    return arma::accu(0.5f*log_approx(0.5f*tau/arma::math::pi())
+                      - 0.5f * schur_product(tau, square(x - mu)));
   }
 
   template<typename T, typename U, typename V>
@@ -327,7 +295,9 @@ namespace cppbugs {
     if(!arma::all(x > 0))
       return -std::numeric_limits<double>::infinity();
     return
-      arma::accu(arma::schur((alpha - 1.0f),log_approx(x)) - arma::schur(beta,x) - lgamma(alpha) + arma::schur(alpha,log_approx(beta)));
+      arma::accu(schur_product((alpha - 1.0f),log_approx(x))
+                 - schur_product(beta,x) - lgamma(alpha)
+                 + schur_product(alpha,log_approx(beta)));
   }
 
   template<typename T, typename U, typename V>
@@ -335,21 +305,25 @@ namespace cppbugs {
     if(!arma::all(x > 0) || !arma::all(x < 1) ||
        !arma::all(alpha > 0) || !arma::all(beta > 0))
       return -std::numeric_limits<double>::infinity();
-    return arma::accu(lgamma(alpha+beta) - lgamma(alpha) - lgamma(beta) + arma::schur(alpha - 1.0f, log_approx(x)) + arma::schur(beta - 1.0f, log_approx(1.0f - x)));
+    return arma::accu(lgamma(alpha+beta) - lgamma(alpha) - lgamma(beta)
+                      + schur_product(alpha - 1.0f, log_approx(x))
+                      + schur_product(beta - 1.0f, log_approx(1.0f - x)));
   }
 
   template<typename T, typename U, typename V>
   double binom_logp(const T& x, const U& n, const V& p) {
     if(!arma::all(x >= 0) || !arma::all(x <= n))
       return -std::numeric_limits<double>::infinity();
-    return arma::accu(arma::schur(x,log_approx(p)) + arma::schur((n-x),log_approx(1-p)) + arma::factln(n) - arma::factln(x) - arma::factln(n-x));
+    return arma::accu(schur_product(x,log_approx(p))
+                      + schur_product((n-x),log_approx(1-p)) + arma::factln(n) - arma::factln(x) - arma::factln(n-x));
   }
 
   template<typename T, typename U>
   double bernoulli_logp(const T& x, const U& p) {
     if(!arma::all(x >= 0) || !arma::all(x <= 1))
       return -std::numeric_limits<double>::infinity();
-    return arma::accu(arma::schur(x,log_approx(p)) + arma::schur((1-x), log_approx(1-p)));
+    return arma::accu(schur_product(x,log_approx(p))
+                      + schur_product((1-x), log_approx(1-p)));
   }
 
   // sigma denotes cov matrix rather than precision matrix

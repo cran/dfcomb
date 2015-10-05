@@ -1,8 +1,8 @@
-a806817b09f29feb0281c60f5548373c *DESCRIPTION
+492d88f329a96cc10656f5b080f72142 *DESCRIPTION
 3766eb6c353e414c48bf0bf78430aeee *NAMESPACE
 b92920f2f8c7cec0a9c0a5026e6ca5f3 *R/dfcomb.R
 c3cded853a2388ad53569a7105d1c1e3 *cleanup
-800a13b480f0d53d93758ba17fadd14e *configure
+5d654e54bd0239ca71bd0a54fc53eda1 *configure
 667163148e6a172f7ef47b1d087ccab1 *configure.ac
 d41d8cd98f00b204e9800998ecf8427e *configure.win
 6e0608e8aea88bb078ba48fbbc912309 *man/CombIncrease_next.Rd
@@ -16,8 +16,8 @@ b3c17b9c0c98e095377e2d7a955228ba *src/CppBugs/cppbugs/cppbugs.hpp
 fdfac2796a0803e5938f77dc7d21ff9d *src/CppBugs/cppbugs/distributions/mcmc.beta.hpp
 49862101631d2c616981c6f9ebad6afa *src/CppBugs/cppbugs/distributions/mcmc.binomial.hpp
 6fe5c378ae0d3d4007ca9cefdb63eb0b *src/CppBugs/cppbugs/distributions/mcmc.discrete.hpp
-8b71a512d09c5b9f5f8bae21de3f4a77 *src/CppBugs/cppbugs/distributions/mcmc.exponential.censored.hpp
-999caa8935d32d64921bf5a684126f8f *src/CppBugs/cppbugs/distributions/mcmc.exponential.hpp
+15833211cd1a79d8d2a19815db2197d7 *src/CppBugs/cppbugs/distributions/mcmc.exponential.censored.hpp
+a85fd64406cbc40f54827293a0c52ec6 *src/CppBugs/cppbugs/distributions/mcmc.exponential.hpp
 79b88a4d14634c57b2a0cb4a77a4ebd8 *src/CppBugs/cppbugs/distributions/mcmc.gamma.hpp
 0b090da319bfc6f8812e8eae67ea056c *src/CppBugs/cppbugs/distributions/mcmc.multivariate.normal.hpp
 cdb3e92c234ea7e62eb60ffb769386f2 *src/CppBugs/cppbugs/distributions/mcmc.normal.hpp
@@ -26,8 +26,8 @@ af03787885a66b969cf345ecd451ba1f *src/CppBugs/cppbugs/distributions/mcmc.uniform
 c903410d67b7b02c9f8089fadb8f7401 *src/CppBugs/cppbugs/mcmc.dynamic.hpp
 c3386047912345c297d443fc05960efa *src/CppBugs/cppbugs/mcmc.dynamic.stochastic.hpp
 fed6268025eabb0efea526566c4688df *src/CppBugs/cppbugs/mcmc.jump.hpp
-4d04dd65a9ab9f8b45cfc79eb3eed4c9 *src/CppBugs/cppbugs/mcmc.math.hpp
-6a713a45b6c2e2141a7c8b4e86e99811 *src/CppBugs/cppbugs/mcmc.model.hpp
+460d7ef95bea5513698d67f31ec41d0e *src/CppBugs/cppbugs/mcmc.math.hpp
+3fed40110abb10c74877845919192342 *src/CppBugs/cppbugs/mcmc.model.hpp
 7a632601ae8b12cf1ce7cdd7e3560f16 *src/CppBugs/cppbugs/mcmc.object.hpp
 f8e02ec52332b300c312f442a0496316 *src/CppBugs/cppbugs/mcmc.observed.hpp
 9f8f426003d7292cdc4b759a8959161c *src/CppBugs/cppbugs/mcmc.rng.base.hpp
@@ -40,5 +40,5 @@ ac6bdbaffb24b06ddd1530c6a067d966 *src/arms.h
 b1f56dad4d675daed0c9df4a576977b3 *src/dfcomb.c
 ac6badc505671ca31820b5672fb18622 *src/dfcomb.h
 cd91ba4dbf12ce8115b1afd677a38490 *src/logistic.cpp
-271a619307df3ea2e5f721e6699feb0c *src/plateau.cpp
+03e6933bc23a6eac3a805a038087b120 *src/plateau.cpp
 62d4c6b5d55207cfac24e4417ccaa1c5 *tools/ax_check_compile_flag.m4

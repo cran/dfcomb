@@ -162,12 +162,12 @@ struct results {
   double duration;
 
   results(int ndose1, int ndose2) :
+    inconc(0),
     nptsdose(ndose1, vector<int>(ndose2, 0)),
     nrecdose(ndose1, vector<int>(ndose2, 0)),
     ntox(ndose1, vector<int>(ndose2, 0)),
     neff(ndose1, vector<int>(ndose2, 0)),
-    inconc(0), n_trials(0),
-    duration(0)
+    n_trials(0), duration(0)
   { }
 
   void accumulate(const trial_data& trial_data, const pair<int, int>& recom) {

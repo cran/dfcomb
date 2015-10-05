@@ -34,7 +34,7 @@ namespace cppbugs {
     inline double calc() const {
       if(!arma::all(x_ > 0))
         return -std::numeric_limits<double>::infinity();
-      return arma::accu(log_approx(lambda_) - arma::schur(lambda_, x_));
+      return arma::accu(log_approx(lambda_) - schur_product(lambda_, x_));
     }
   };
 

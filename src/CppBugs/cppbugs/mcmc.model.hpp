@@ -50,8 +50,8 @@ namespace cppbugs {
     MCModel(std::function<void ()> update_, long seed = 42):
       accepted_(0), rejected_(0),
       logp_value_(-std::numeric_limits<double>::infinity()),
-      old_logp_value_(-std::numeric_limits<double>::infinity()), update(update_),
-      rng_(seed) {}
+      old_logp_value_(-std::numeric_limits<double>::infinity()),
+      rng_(seed), update(update_) {}
     ~MCModel() {
       // use data_node_map as delete list
       // only objects allocated by this class are inserted thre
