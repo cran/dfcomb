@@ -24,7 +24,7 @@
 
 namespace cppbugs {
 
-  arma_hot arma_pure arma_inline
+  arma_hot arma_inline static
   float log_approx(float val) {
     union { float f; int i; } valu;
     valu.f = val;
@@ -54,7 +54,7 @@ namespace cppbugs {
   float exp_cst1 = 2139095040.f;
   float exp_cst2 = 0.f;
 
-  arma_hot arma_pure arma_inline
+  arma_hot arma_inline static
   float exp_approx(float val) {
     union { int i; float f; } xu;
     float val2 = 12102203.1615614f*val+1065353216.f;
@@ -74,7 +74,7 @@ namespace arma {
   // log_approx
   class eop_log_approx : public eop_core<eop_log_approx> {};
 
-  template<> template<typename eT> arma_hot arma_pure arma_inline eT
+  template<> template<typename eT> arma_hot arma_inline eT
   eop_core<eop_log_approx>::process(const eT val, const eT  ) {
     return cppbugs::log_approx(val);
   }
@@ -100,7 +100,7 @@ namespace arma {
   // exp_approx
   class eop_exp_approx: public eop_core<eop_exp_approx> {};
 
-  template<> template<typename eT> arma_hot arma_pure arma_inline eT
+  template<> template<typename eT> arma_hot arma_inline eT
   eop_core<eop_exp_approx>::process(const eT val, const eT  ) {
     return cppbugs::exp_approx(val);
   }
@@ -121,33 +121,6 @@ namespace arma {
     return eOpCube<T1, eop_exp_approx>(A.get_ref());
   }
 }
-
-namespace arma {
-  // lgamma
-  class eop_lgamma : public eop_core<eop_lgamma> {};
-
-  template<> template<typename eT> arma_hot arma_pure arma_inline eT
-  eop_core<eop_lgamma>::process(const eT val, const eT  ) {
-    return lgamma(val);
-  }
-
-  // Base
-  template<typename T1>
-  arma_inline
-  const eOp<T1, eop_lgamma> lgamma(const Base<typename T1::elem_type,T1>& A) {
-    arma_extra_debug_sigprint();
-    return eOp<T1, eop_lgamma>(A.get_ref());
-  }
-
-  // BaseCube
-  template<typename T1>
-  arma_inline
-  const eOpCube<T1, eop_lgamma> lgamma(const BaseCube<typename T1::elem_type,T1>& A) {
-    arma_extra_debug_sigprint();
-    return eOpCube<T1, eop_lgamma>(A.get_ref());
-  }
-}
-
 
 namespace arma {
   // factln
@@ -172,7 +145,7 @@ namespace arma {
 
   class eop_factln : public eop_core<eop_factln> {};
 
-  template<> template<typename eT> arma_hot arma_pure arma_inline eT
+  template<> template<typename eT> arma_hot arma_inline eT
   eop_core<eop_factln>::process(const eT val, const eT  ) {
     return factln(val);
   }

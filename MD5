@@ -1,9 +1,9 @@
-492d88f329a96cc10656f5b080f72142 *DESCRIPTION
+f9eb377afd05e5610af9c49730ab9d03 *DESCRIPTION
 3766eb6c353e414c48bf0bf78430aeee *NAMESPACE
 b92920f2f8c7cec0a9c0a5026e6ca5f3 *R/dfcomb.R
 c3cded853a2388ad53569a7105d1c1e3 *cleanup
-5d654e54bd0239ca71bd0a54fc53eda1 *configure
-667163148e6a172f7ef47b1d087ccab1 *configure.ac
+cd418e15b78b11568e0bc9dd09cc824e *configure
+3b6a58f454b1a89349949ea9b1c86ea3 *configure.ac
 d41d8cd98f00b204e9800998ecf8427e *configure.win
 6e0608e8aea88bb078ba48fbbc912309 *man/CombIncrease_next.Rd
 934b03c851d6b2b823c931cf3fd16ea3 *man/CombIncrease_sim.Rd
@@ -26,7 +26,7 @@ af03787885a66b969cf345ecd451ba1f *src/CppBugs/cppbugs/distributions/mcmc.uniform
 c903410d67b7b02c9f8089fadb8f7401 *src/CppBugs/cppbugs/mcmc.dynamic.hpp
 c3386047912345c297d443fc05960efa *src/CppBugs/cppbugs/mcmc.dynamic.stochastic.hpp
 fed6268025eabb0efea526566c4688df *src/CppBugs/cppbugs/mcmc.jump.hpp
-460d7ef95bea5513698d67f31ec41d0e *src/CppBugs/cppbugs/mcmc.math.hpp
+c1209897ce490e767d4cdacb234e3223 *src/CppBugs/cppbugs/mcmc.math.hpp
 3fed40110abb10c74877845919192342 *src/CppBugs/cppbugs/mcmc.model.hpp
 7a632601ae8b12cf1ce7cdd7e3560f16 *src/CppBugs/cppbugs/mcmc.object.hpp
 f8e02ec52332b300c312f442a0496316 *src/CppBugs/cppbugs/mcmc.observed.hpp

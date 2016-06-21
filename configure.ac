@@ -1,6 +1,6 @@
-m4_define([DFMTA_VERSION],
+m4_define([DFCOMB_VERSION],
           m4_esyscmd([cat DESCRIPTION | grep Version | cut -b 10- | tr -d '\n']))
-AC_INIT([dfmta], [DFMTA_VERSION], [eldamjh@gmail.com])
+AC_INIT([dfcomb], [DFCOMB_VERSION], [eldamjh@gmail.com])
 
 AC_CONFIG_MACRO_DIR([tools])
 
