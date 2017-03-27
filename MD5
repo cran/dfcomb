@@ -1,4 +1,4 @@
-f9eb377afd05e5610af9c49730ab9d03 *DESCRIPTION
+b51529e267433284d7b134a11df79c94 *DESCRIPTION
 3766eb6c353e414c48bf0bf78430aeee *NAMESPACE
 b92920f2f8c7cec0a9c0a5026e6ca5f3 *R/dfcomb.R
 c3cded853a2388ad53569a7105d1c1e3 *cleanup
@@ -37,7 +37,7 @@ e1b3e9933d448ec022134c8cbf9f232b *src/Makevars.in
 21ff969dcaf4f15368115b4d4b5096ef *src/Makevars.win
 ea2ee005701e7a31cdcab00e89e83d18 *src/arms.c
 ac6bdbaffb24b06ddd1530c6a067d966 *src/arms.h
-b1f56dad4d675daed0c9df4a576977b3 *src/dfcomb.c
+4a93c2a378a1654ae137dd9d61e82351 *src/dfcomb.c
 ac6badc505671ca31820b5672fb18622 *src/dfcomb.h
 cd91ba4dbf12ce8115b1afd677a38490 *src/logistic.cpp
 03e6933bc23a6eac3a805a038087b120 *src/plateau.cpp

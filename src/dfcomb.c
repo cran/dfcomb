@@ -12,10 +12,12 @@ static R_CMethodDef cMethods[] = {
   {NULL, NULL, 0}
 };
 
-void R_init_dfcomb(DllInfo *info) {
+void R_init_dfcomb(DllInfo *dll) {
   cMethods[0].numArgs = logistic_next_nargs;
   cMethods[1].numArgs = logistic_sim_nargs;
   cMethods[2].numArgs = plateau_next_nargs;
   cMethods[3].numArgs = plateau_sim_nargs;
-  R_registerRoutines(info, cMethods, NULL, NULL, NULL);
+  R_registerRoutines(dll, cMethods, NULL, NULL, NULL);
+  R_useDynamicSymbols(dll, FALSE);
+  R_forceSymbols(dll, TRUE);
 }
