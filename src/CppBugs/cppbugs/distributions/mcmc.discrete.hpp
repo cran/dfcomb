@@ -37,7 +37,7 @@ namespace cppbugs {
     inline double calc() const {
       if(x_ < 0 || x_ >= (int)p_.n_elem)
         return -std::numeric_limits<double>::infinity();
-      return log_approx(p_[x_]) - log_approx(arma::accu(p_));
+      return cppbugs::log_approx(p_[x_]) - cppbugs::log_approx(arma::accu(p_));
     }
   };
 
@@ -48,12 +48,12 @@ namespace cppbugs {
   public:
     DiscreteLikelihiood(const T& x, const U& p): x_(x), p_(p) { }
     inline double calc() const {
-      if(!arma::all(x_ >= 0) || !arma::all(x_ < (int)p_.n_elem))
+      if(!arma_all(x_ >= 0) || !arma_all(x_ < (int)p_.n_elem))
         return -std::numeric_limits<double>::infinity();
       double sum = 0;
       for(unsigned i = 0; i < x_.n_elem; i++)
-        sum += log_approx(p_[x_[i]]);
-      return sum - x_.n_elem * log_approx(arma::accu(p_));
+        sum += cppbugs::log_approx(p_[x_[i]]);
+      return sum - x_.n_elem * cppbugs::log_approx(arma::accu(p_));
     }
   };
 

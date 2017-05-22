@@ -44,7 +44,7 @@ namespace cppbugs {
           y = uniform_rng_(generator_)-0.5;
           s = x*x+y*y;
         } while(s > 0.25 || s == 0.);
-        double coef = sqrt(-2*log_approx(s*4)/s);
+        double coef = sqrt(-2*cppbugs::log_approx(s*4)/s);
         next_norm_ = coef*y;
         return coef*x;
       } else {

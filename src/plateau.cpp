@@ -1,7 +1,6 @@
 #include<R.h>
 
 #define BOOST_DISABLE_ASSERTS
-#define ARMA_32BIT_WORD
 #define ARMA_DONT_USE_BLAS
 #define ARMA_DONT_USE_LAPACK
 #include <RcppArmadillo.h>
@@ -68,7 +67,7 @@ struct toxicity_parameters {
 
   template<typename U>
   void proba_tox(const U& dose_tox1, const U& dose_tox2, U& out) {
-    out = 1-1/(1+exp_approx(beta0 + beta1*dose_tox1 + beta2*dose_tox2));
+    out = 1-1/(1 + cppbugs::exp_approx(beta0 + beta1*dose_tox1 + beta2*dose_tox2));
   }
 };
 
@@ -85,13 +84,13 @@ struct progression_parameters {
   template<typename U>
   void calc_hasard(const U& dose_prog1, const vector<U>& dose_prog2_tau, U& out) const {
     unsigned tau = min((int)dose_prog2_tau.size()-1, max(0, this->tau));
-    out = lambda0 * exp_approx(gamma1*dose_prog1 + gamma2*dose_prog2_tau[tau]);
+    out = lambda0 * cppbugs::exp_approx(gamma1*dose_prog1 + gamma2*dose_prog2_tau[tau]);
   }
 
   double survival(double t, double d1, const vector<double>& d2) const {
     double hasard;
     calc_hasard(d1, d2, hasard);
-    return exp_approx(-t*hasard);
+    return cppbugs::exp_approx(-t*hasard);
   }
 
   double responseRate(double d1, const vector<double>& d2) const {

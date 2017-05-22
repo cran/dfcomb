@@ -24,8 +24,7 @@
 
 namespace cppbugs {
 
-  arma_hot arma_inline static
-  float log_approx(float val) {
+  inline float log_approx(float val) {
     union { float f; int i; } valu;
     valu.f = val;
     float exp = valu.i >> 23;
@@ -41,11 +40,19 @@ namespace cppbugs {
   }
 
   inline double log_approx(const double x) {
-    return log_approx((float)x);
+    return cppbugs::log_approx((float)x);
   }
 
   inline float log_approx(const int x) {
-    return log_approx((float)x);
+    return cppbugs::log_approx((float)x);
+  }
+
+  inline arma::vec log_approx(const arma::vec& x) {
+    arma::vec res(size(x));
+    for(int i = 0; i < x.size(); i++) {
+      res[i] = cppbugs::log_approx(x[i]);
+    }
+    return res;
   }
 
   // We do not inline these constants, because that makes GCC
@@ -54,8 +61,7 @@ namespace cppbugs {
   float exp_cst1 = 2139095040.f;
   float exp_cst2 = 0.f;
 
-  arma_hot arma_inline static
-  float exp_approx(float val) {
+  inline float exp_approx(float val) {
     union { int i; float f; } xu;
     float val2 = 12102203.1615614f*val+1065353216.f;
     float val3 = val2 < exp_cst1 ? val2 : exp_cst1;
@@ -68,63 +74,17 @@ namespace cppbugs {
     float ret = xu.f * (0.51079604f+b*(0.30980503f+b*(0.16876894f+b*(-0.00303925f+b*0.01367652f))));
     return ret;
   }
-}
 
-namespace arma {
-  // log_approx
-  class eop_log_approx : public eop_core<eop_log_approx> {};
-
-  template<> template<typename eT> arma_hot arma_inline eT
-  eop_core<eop_log_approx>::process(const eT val, const eT  ) {
-    return cppbugs::log_approx(val);
+  inline arma::vec exp_approx(const arma::vec& x) {
+    arma::vec res(size(x));
+    for(int i = 0; i < x.size(); i++) {
+      res[i] = cppbugs::exp_approx(x[i]);
+    }
+    return res;
   }
 
-  // Base
-  template<typename T1>
-  arma_inline
-  const eOp<T1, eop_log_approx> log_approx(const Base<typename T1::elem_type,T1>& A) {
-    arma_extra_debug_sigprint();
-    return eOp<T1, eop_log_approx>(A.get_ref());
-  }
-
-  // BaseCube
-  template<typename T1>
-  arma_inline
-  const eOpCube<T1, eop_log_approx> log_approx(const BaseCube<typename T1::elem_type,T1>& A) {
-    arma_extra_debug_sigprint();
-    return eOpCube<T1, eop_log_approx>(A.get_ref());
-  }
-}
-
-namespace arma {
-  // exp_approx
-  class eop_exp_approx: public eop_core<eop_exp_approx> {};
-
-  template<> template<typename eT> arma_hot arma_inline eT
-  eop_core<eop_exp_approx>::process(const eT val, const eT  ) {
-    return cppbugs::exp_approx(val);
-  }
-
-  // Base
-  template<typename T1>
-  arma_inline
-  const eOp<T1, eop_exp_approx> exp_approx(const Base<typename T1::elem_type,T1>& A) {
-    arma_extra_debug_sigprint();
-    return eOp<T1, eop_exp_approx>(A.get_ref());
-  }
-
-  // BaseCube
-  template<typename T1>
-  arma_inline
-  const eOpCube<T1, eop_exp_approx> exp_approx(const BaseCube<typename T1::elem_type,T1>& A) {
-    arma_extra_debug_sigprint();
-    return eOpCube<T1, eop_exp_approx>(A.get_ref());
-  }
-}
-
-namespace arma {
   // factln
-  double factln(const int i) {
+  inline double factln(const int i) {
     static std::vector<double> factln_table;
 
     if(i < 0) {
@@ -143,56 +103,25 @@ namespace arma {
     return factln_table[i];
   }
 
-  class eop_factln : public eop_core<eop_factln> {};
+  template<typename T>
+  inline bool arma_all(const T& x) { return arma::all(x); }
+  inline bool arma_all(const bool x) { return x; }
 
-  template<> template<typename eT> arma_hot arma_inline eT
-  eop_core<eop_factln>::process(const eT val, const eT  ) {
-    return factln(val);
-  }
-
-  // Base
-  template<typename T1>
-  arma_inline
-  const eOp<T1, eop_factln> factln(const Base<typename T1::elem_type,T1>& A) {
-    arma_extra_debug_sigprint();
-    return eOp<T1, eop_factln>(A.get_ref());
-  }
-
-  // BaseCube
-  template<typename T1>
-  arma_inline
-  const eOpCube<T1, eop_factln> factln(const BaseCube<typename T1::elem_type,T1>& A) {
-    arma_extra_debug_sigprint();
-    return eOpCube<T1, eop_factln>(A.get_ref());
-  }
-}
-
-namespace arma {
-  bool all(const bool x) {
-    return x;
-  }
-}
-
-// Stochastic/Math related functions
-namespace cppbugs {
-
+  // Stochastic/Math related functions
   template<typename T, typename U>
-  arma_inline
-  auto schur_product(T&& x, U&& y) ->
+  inline auto schur_product(T&& x, U&& y) ->
     decltype (arma::operator%(std::forward<T>(x), std::forward<U>(y))){
     return arma::operator%(std::forward<T>(x), std::forward<U>(y));
   }
 
   template<typename T>
-  arma_inline
-  auto schur_product(const typename T::elem_type& x, T&& y) ->
+  inline auto schur_product(const typename T::elem_type& x, T&& y) ->
     decltype (arma::operator*(x, std::forward<T>(y))){
     return arma::operator*(x, std::forward<T>(y));
   }
 
   template<typename T>
-  arma_inline
-  auto schur_product(T&& x, const typename T::elem_type& y) ->
+  inline auto schur_product(T&& x, const typename T::elem_type& y) ->
     decltype (arma::operator*(std::forward<T>(x), y)){
     return arma::operator*(std::forward<T>(x), y);
   }
@@ -252,75 +181,78 @@ namespace cppbugs {
 
   template<typename T, typename U, typename V>
   double normal_logp(const T& x, const U& mu, const V& tau) {
-    return arma::accu(0.5f*log_approx(0.5f*tau/arma::math::pi())
+    return arma::accu(0.5f*cppbugs::log_approx(0.5f*tau/M_PI)
                       - 0.5f * schur_product(tau, square(x - mu)));
   }
 
   template<typename T, typename U, typename V>
   double uniform_logp(const T& x, const U& lower, const V& upper) {
-    if(!arma::all(x > lower) || !arma::all(x < upper))
+    if(!arma_all(x > lower) || !arma_all(x < upper))
       return -std::numeric_limits<double>::infinity();
-    return -arma::accu(log_approx(upper - lower));
+    return -arma::accu(cppbugs::log_approx(upper - lower));
   }
 
   template<typename T, typename U, typename V>
   double gamma_logp(const T& x, const U& alpha, const V& beta) {
-    if(!arma::all(x > 0))
+    if(!arma_all(x > 0))
       return -std::numeric_limits<double>::infinity();
     return
-      arma::accu(schur_product((alpha - 1.0f),log_approx(x))
+      arma::accu(schur_product((alpha - 1.0f),cppbugs::log_approx(x))
                  - schur_product(beta,x) - lgamma(alpha)
-                 + schur_product(alpha,log_approx(beta)));
+                 + schur_product(alpha,cppbugs::log_approx(beta)));
   }
 
   template<typename T, typename U, typename V>
   double beta_logp(const T& x, const U& alpha, const V& beta) {
-    if(!arma::all(x > 0) || !arma::all(x < 1) ||
-       !arma::all(alpha > 0) || !arma::all(beta > 0))
+    if(!arma_all(x > 0) || !arma_all(x < 1) ||
+       !arma_all(alpha > 0) || !arma_all(beta > 0))
       return -std::numeric_limits<double>::infinity();
     return arma::accu(lgamma(alpha+beta) - lgamma(alpha) - lgamma(beta)
-                      + schur_product(alpha - 1.0f, log_approx(x))
-                      + schur_product(beta - 1.0f, log_approx(1.0f - x)));
+                      + schur_product(alpha - 1.0f, cppbugs::log_approx(x))
+                      + schur_product(beta - 1.0f, cppbugs::log_approx(1.0f - x)));
   }
 
   template<typename T, typename U, typename V>
   double binom_logp(const T& x, const U& n, const V& p) {
-    if(!arma::all(x >= 0) || !arma::all(x <= n))
+    if(!arma_all(x >= 0) || !arma_all(x <= n))
       return -std::numeric_limits<double>::infinity();
-    return arma::accu(schur_product(x,log_approx(p))
-                      + schur_product((n-x),log_approx(1-p)) + arma::factln(n) - arma::factln(x) - arma::factln(n-x));
+    return arma::accu(schur_product(x,cppbugs::log_approx(p))
+                      + schur_product((n-x),cppbugs::log_approx(1-p)) +
+                                            factln(n) - factln(x) - factln(n-x));
   }
 
   template<typename T, typename U>
   double bernoulli_logp(const T& x, const U& p) {
-    if(!arma::all(x >= 0) || !arma::all(x <= 1))
+    if(!arma_all(x >= 0) || !arma_all(x <= 1))
       return -std::numeric_limits<double>::infinity();
-    return arma::accu(schur_product(x,log_approx(p))
-                      + schur_product((1-x), log_approx(1-p)));
+    return arma::accu(schur_product(x, cppbugs::log_approx(p))
+                      + schur_product((1-x), cppbugs::log_approx(1-p)));
   }
 
   // sigma denotes cov matrix rather than precision matrix
   double multivariate_normal_sigma_logp(const arma::rowvec& x, const arma::rowvec& mu, const arma::mat& sigma) {
-    const double log_2pi = log(2 * arma::math::pi());
+    const double log_2pi = log(2 * M_PI);
     arma::mat R(arma::zeros<arma::mat>(sigma.n_cols,sigma.n_cols));
 
     // non-positive definite test via chol
     if(chol(R,sigma) == false) { return -std::numeric_limits<double>::infinity(); }
 
     // otherwise calc logp
-    return -(x.n_elem * log_2pi + log_approx(arma::det(sigma)) + mahalanobis(x,mu,sigma))/2;
+    return -(x.n_elem * log_2pi + cppbugs::log_approx(arma::det(sigma)) +
+             mahalanobis(x,mu,sigma))/2;
   }
 
   // sigma denotes cov matrix rather than precision matrix
   double multivariate_normal_sigma_logp(const arma::vec& x, const arma::vec& mu, const arma::mat& sigma) {
-    const double log_2pi = log(2 * arma::math::pi());
+    const double log_2pi = log(2 * M_PI);
     arma::mat R(arma::zeros<arma::mat>(sigma.n_cols,sigma.n_cols));
 
     // non-positive definite test via chol
     if(chol(R,sigma) == false) { return -std::numeric_limits<double>::infinity(); }
 
     // otherwise calc logp
-    return -(x.n_elem * log_2pi + log_approx(arma::det(sigma)) + mahalanobis(x,mu,sigma))/2;
+    return -(x.n_elem * log_2pi + cppbugs::log_approx(arma::det(sigma)) +
+             mahalanobis(x,mu,sigma))/2;
   }
 
   template<typename T, typename U, typename V>
