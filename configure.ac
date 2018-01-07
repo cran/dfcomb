@@ -29,11 +29,6 @@ AC_LANG([C++])
 PKG_CXXFLAGS=
 PKG_LIBS=
 
-AX_CHECK_COMPILE_FLAG([-ftree-vectorize],
-        [PKG_CXXFLAGS="${PKG_CXXFLAGS} -ftree-vectorize"])
-AX_CHECK_COMPILE_FLAG([-funsafe-math-optimizations],
-        [PKG_CXXFLAGS="${PKG_CXXFLAGS} -funsafe-math-optimizations"])
-
 AC_OPENMP
 PKG_CXXFLAGS="${PKG_CXXFLAGS} ${OPENMP_CXXFLAGS}"
 PKG_LIBS="${PKG_LIBS} ${OPENMP_CXXFLAGS}"

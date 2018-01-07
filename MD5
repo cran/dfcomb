@@ -1,9 +1,9 @@
-0699bd6587e27e2fd27876e2e9f49380 *DESCRIPTION
+aa52b66f4a30e2d094652a9c019f7384 *DESCRIPTION
 3766eb6c353e414c48bf0bf78430aeee *NAMESPACE
 b92920f2f8c7cec0a9c0a5026e6ca5f3 *R/dfcomb.R
 c3cded853a2388ad53569a7105d1c1e3 *cleanup
-479842d8de4ccecf65ee76144419a04c *configure
-5694a48b5906a3eaf46d227fe27564b9 *configure.ac
+08b7c9849caa4d681dd8bebc29e772c1 *configure
+d17c29865d282f3cfc3fc0729c54962f *configure.ac
 d41d8cd98f00b204e9800998ecf8427e *configure.win
 6e0608e8aea88bb078ba48fbbc912309 *man/CombIncrease_next.Rd
 934b03c851d6b2b823c931cf3fd16ea3 *man/CombIncrease_sim.Rd
@@ -34,7 +34,7 @@ f8e02ec52332b300c312f442a0496316 *src/CppBugs/cppbugs/mcmc.observed.hpp
 b222726f68b108164577f5c62f1f99ca *src/CppBugs/cppbugs/mcmc.rng.hpp
 e16c392579b242b2f76f3b1874d0417c *src/CppBugs/cppbugs/mcmc.stochastic.hpp
 e1b3e9933d448ec022134c8cbf9f232b *src/Makevars.in
-21ff969dcaf4f15368115b4d4b5096ef *src/Makevars.win
+f291a4a0a98bcc6cd299ac0605f70950 *src/Makevars.win
 ea2ee005701e7a31cdcab00e89e83d18 *src/arms.c
 ac6bdbaffb24b06ddd1530c6a067d966 *src/arms.h
 4a93c2a378a1654ae137dd9d61e82351 *src/dfcomb.c
