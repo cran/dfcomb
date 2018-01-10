@@ -6,9 +6,9 @@
 \code{CombIncrease_sim} is used to generate simulation replicates of phase I clinical trial for combination studies where the toxicity and efficacy of both agents is assumed to increase with the dose using the design proposed by Riviere et al. entitled "A Bayesian dose-finding design for drug combination clinical trials based on the logistic model".
 }
 \usage{
-CombIncrease_sim(ndose_a1, ndose_a2, p_tox, target, target_min, target_max, 
-prior_tox_a1, prior_tox_a2, n_cohort, cohort, tite=FALSE, time_full=0, 
-poisson_rate=0, nsim, c_e=0.85, c_d=0.45, c_stop=0.95, n_min=6, seed = 14061991)
+CombIncrease_sim(ndose_a1, ndose_a2, p_tox, target, target_min, target_max,
+  prior_tox_a1, prior_tox_a2, n_cohort, cohort, tite=FALSE, time_full=0,
+  poisson_rate=0, nsim, c_e=0.85, c_d=0.45, c_stop=0.95, n_min=6, seed = 14061991)
 }
 \arguments{
   \item{ndose_a1}{Number of dose levels for agent 1.}
@@ -70,19 +70,20 @@ p_tox_sc6 = matrix(c(0.05,0.08,0.10,0.13,0.15,
 prior_a1 = c(0.12, 0.2, 0.3, 0.4, 0.5)
 prior_a2 = c(0.2, 0.3, 0.4)
 
-# UNCOMMENT THOSE EXAMPLES
-#sim1 = CombIncrease_sim(ndose_a1=5, ndose_a2=3, p_tox=p_tox_sc1, target=0.30, 
-#target_min=0.20, target_max=0.40, prior_tox_a1=prior_a1, prior_tox_a2=prior_a2, 
-#n_cohort=20, cohort=3, tite=FALSE, nsim=2, c_e=0.85, c_d=0.45, c_stop=0.95, 
-#n_min=4, seed = 14061991)
-                        
-#sim1
-                        
-#sim2 = CombIncrease_sim(ndose_a1=5, ndose_a2=3, p_tox=p_tox_sc6, target=0.30, 
-#target_min=0.20, target_max=0.40, prior_tox_a1=prior_a1, prior_tox_a2=prior_a2, 
-#n_cohort=20, cohort=3, nsim=2)  
+\donttest{
+sim1 = CombIncrease_sim(ndose_a1=5, ndose_a2=3, p_tox=p_tox_sc1, target=0.30,
+  target_min=0.20, target_max=0.40, prior_tox_a1=prior_a1, prior_tox_a2=prior_a2,
+  n_cohort=20, cohort=3, tite=FALSE, nsim=2, c_e=0.85, c_d=0.45, c_stop=0.95,
+  n_min=4, seed = 14061991)
 
-#sim2
+sim1
+
+sim2 = CombIncrease_sim(ndose_a1=5, ndose_a2=3, p_tox=p_tox_sc6, target=0.30,
+  target_min=0.20, target_max=0.40, prior_tox_a1=prior_a1, prior_tox_a2=prior_a2,
+  n_cohort=20, cohort=3, nsim=2)
+
+sim2
+}
 
 # Dummy example, running quickly
 useless = CombIncrease_sim(ndose_a1=3, ndose_a2=2,

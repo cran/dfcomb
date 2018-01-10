@@ -7,11 +7,11 @@
 }
 \usage{
 CombIncrease_next(ndose_a1, ndose_a2, target, target_min, target_max,
-prior_tox_a1, prior_tox_a2, in_startup=TRUE, final, pat_incl,
-dose_adm1, dose_adm2, tite=FALSE, toxicity, time_full=0, time_tox=0,
-time_follow=0, c_e=0.85, c_d=0.45, c_stop=0.95, n_min)
+  prior_tox_a1, prior_tox_a2, in_startup=TRUE, final, pat_incl,
+  dose_adm1, dose_adm2, tite=FALSE, toxicity, time_full=0, time_tox=0,
+  time_follow=0, c_e=0.85, c_d=0.45, c_stop=0.95, n_min)
 }
-\arguments{ 
+\arguments{
   \item{ndose_a1}{Number of dose levels for agent 1.}
   \item{ndose_a2}{Number of dose levels for agent 2.}
   \item{target}{Toxicity (probability) target (for dose allocation).}
@@ -80,17 +80,17 @@ dose2 = c(1,1,1,2,2,2,3,3,3,2,2,2,1,1,1,1,1,1)
 t_tox = c(rep(+Inf,8),2.9,+Inf,4.6,+Inf,+Inf,+Inf,+Inf,+Inf,+Inf,5.2)
 follow = c(rep(6,15), 4.9, 3.1, 1.3)
 
-next1 = CombIncrease_next(ndose_a1=5, ndose_a2=3, target=0.3, target_min=0.20, 
-target_max=0.40, prior_tox_a1=prior_a1, prior_tox_a2=prior_a2, final=FALSE, 
-pat_incl=18, dose_adm1=dose1, dose_adm2=dose2, tite=FALSE, toxicity=toxicity1, 
-n_min=6)
+next1 = CombIncrease_next(ndose_a1=5, ndose_a2=3, target=0.3, target_min=0.20,
+  target_max=0.40, prior_tox_a1=prior_a1, prior_tox_a2=prior_a2, final=FALSE,
+  pat_incl=18, dose_adm1=dose1, dose_adm2=dose2, tite=FALSE, toxicity=toxicity1,
+  n_min=6)
 
 next1
 
-next2 =CombIncrease_next(ndose_a1=5, ndose_a2=3, target=0.30, target_min=0.20, 
-target_max=0.40, prior_tox_a1=prior_a1, prior_tox_a2=prior_a2, final=FALSE, 
-pat_incl=18, dose_adm1=dose1, dose_adm2=dose2, tite=TRUE, time_full=6, 
-time_tox=t_tox, time_follow=follow, n_min=6)
+next2 =CombIncrease_next(ndose_a1=5, ndose_a2=3, target=0.30, target_min=0.20,
+  target_max=0.40, prior_tox_a1=prior_a1, prior_tox_a2=prior_a2, final=FALSE,
+  pat_incl=18, dose_adm1=dose1, dose_adm2=dose2, tite=TRUE, time_full=6,
+  time_tox=t_tox, time_follow=follow, n_min=6)
 
 next2
 }

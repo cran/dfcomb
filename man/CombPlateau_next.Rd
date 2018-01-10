@@ -6,12 +6,12 @@
 \code{CombPlateau_next} is used to determine the next or recommended combination in a phase I/II clinical trial for combination studies where the toxicity is assumed to increase with the dose of both agents, and the efficacy is asummed to increase with one agent and increase and possibily plateaus with the second agent. This phase I/II adaptive design is performed using the design proposed by Riviere et al. entitled "A Bayesian dose finding design for clinical trials combining a cytotoxic agent with a molecularly targeted agent".
 }
 \usage{
-CombPlateau_next(ndose_a1, ndose_a2, tox_max, eff_min, prior_tox_a1, 
-prior_tox_a2, prior_eff_a1, prior_eff_a2, stage, in_startup, cohort_start=3, 
-cohort, pat_incl, dose_adm1, dose_adm2, toxicity, time_full, time_prog, 
-time_follow, cycle=0, c_tox=0.85, c_eff=0.10)
+CombPlateau_next(ndose_a1, ndose_a2, tox_max, eff_min, prior_tox_a1,
+  prior_tox_a2, prior_eff_a1, prior_eff_a2, stage, in_startup, cohort_start=3,
+  cohort, pat_incl, dose_adm1, dose_adm2, toxicity, time_full, time_prog,
+  time_follow, cycle=0, c_tox=0.85, c_eff=0.10)
 }
-\arguments{ 
+\arguments{
   \item{ndose_a1}{Number of dose levels for agent 1.}
   \item{ndose_a2}{Number of dose levels for agent 2.}
   \item{tox_max}{Maximum acceptable toxicity probability.}
@@ -78,10 +78,10 @@ dose2 = c(1,1,1,2,2,2,1,1,1,1,1,1,1,1,1,2,2,2)
 t_prog = c(1.6,4.2,3.5,5.1,2.4,4.8,2.8,4.4,+Inf,3.9,+Inf,4.6,1.8,+Inf,0.5,5.4,2.8,+Inf)
 follow = c(rep(7,15), 4.9, 3.1, 1.3)
 
-next1 = CombPlateau_next(ndose_a1=3, ndose_a2=4, tox_max=0.30, eff_min=0.20, 
-prior_tox_a1, prior_tox_a2, prior_eff_a1, prior_eff_a2, stage=0, in_startup=FALSE,
-cohort=3, pat_incl=18, dose_adm1=dose1, dose_adm2=dose2, toxicity=toxicity, 
-time_full=7, time_prog=t_prog, time_follow=follow)
+next1 = CombPlateau_next(ndose_a1=3, ndose_a2=4, tox_max=0.30, eff_min=0.20,
+  prior_tox_a1, prior_tox_a2, prior_eff_a1, prior_eff_a2, stage=0, in_startup=FALSE,
+  cohort=3, pat_incl=18, dose_adm1=dose1, dose_adm2=dose2, toxicity=toxicity,
+  time_full=7, time_prog=t_prog, time_follow=follow)
 
 next1
 }

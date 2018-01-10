@@ -6,10 +6,10 @@
 \code{CombPlateau_sim} is used to generate simulation replicates of phase I/II clinical trial for combination studies where the toxicity is assumed to increase with the dose of both agents, and the efficacy is asummed to increase with one agent and increase and possibily plateaus with the second agent. This phase I/II adaptive design is performed using the design proposed by Riviere et al. entitled "A Bayesian dose finding design for clinical trials combining a cytotoxic agent with a molecularly targeted agent".
 }
 \usage{
-CombPlateau_sim(ndose_a1, ndose_a2, p_tox, p_eff, tox_max, eff_min, 
-prior_tox_a1, prior_tox_a2, prior_eff_a1, prior_eff_a2, n, cohort_start=3, 
-cohort=3, time_full, poisson_rate, cycle=0, nsim, c_tox=0.85, c_eff=0.10, 
-seed = 2174892, threads=0)
+CombPlateau_sim(ndose_a1, ndose_a2, p_tox, p_eff, tox_max, eff_min,
+  prior_tox_a1, prior_tox_a2, prior_eff_a1, prior_eff_a2, n, cohort_start=3,
+  cohort=3, time_full, poisson_rate, cycle=0, nsim, c_tox=0.85, c_eff=0.10,
+  seed = 2174892, threads=0)
 }
 \arguments{
   \item{ndose_a1}{Number of dose levels for agent 1.}
@@ -85,29 +85,30 @@ prior_eff_a1 = c(0.3, 0.4, 0.5)
 prior_tox_a2 = c(0.12, 0.2, 0.3, 0.4)
 prior_eff_a2 = c(0.3, 0.4, 0.5, 0.59)
 
-# UNCOMMENT THOSE EXAMPLES
-#sim1 = CombPlateau_sim(ndose_a1=3, ndose_a2=4, p_tox=p_tox_sc1,
-#p_eff=p_eff_sc1, tox_max=0.30, eff_min=0.20, prior_tox_a1=prior_tox_a1,
-#prior_tox_a2=prior_tox_a2, prior_eff_a1=prior_eff_a1,
-#prior_eff_a2=prior_eff_a2, n=75, cohort_start=3, cohort=3, time_full=7,
-#poisson_rate=0.28, cycle=0, nsim=2000, c_tox=0.85, c_eff=0.10, seed = 2174892,
-#threads=0)
+\donttest{
+sim1 = CombPlateau_sim(ndose_a1=3, ndose_a2=4, p_tox=p_tox_sc1,
+  p_eff=p_eff_sc1, tox_max=0.30, eff_min=0.20, prior_tox_a1=prior_tox_a1,
+  prior_tox_a2=prior_tox_a2, prior_eff_a1=prior_eff_a1,
+  prior_eff_a2=prior_eff_a2, n=75, cohort_start=3, cohort=3, time_full=7,
+  poisson_rate=0.28, cycle=0, nsim=2000, c_tox=0.85, c_eff=0.10, seed = 2174892,
+  threads=0)
 
-#sim1
+sim1
 
-#sim2 = CombPlateau_sim(ndose_a1=3, ndose_a2=4, p_tox=p_tox_sc4,
-#p_eff=p_eff_sc4, tox_max=0.30, eff_min=0.20, prior_tox_a1=prior_tox_a1,
-#prior_tox_a2=prior_tox_a2, prior_eff_a1=prior_eff_a1,
-#prior_eff_a2=prior_eff_a2, n=75, cohort=3, time_full=7, poisson_rate=0.28,
-#nsim=1000)
+sim2 = CombPlateau_sim(ndose_a1=3, ndose_a2=4, p_tox=p_tox_sc4,
+  p_eff=p_eff_sc4, tox_max=0.30, eff_min=0.20, prior_tox_a1=prior_tox_a1,
+  prior_tox_a2=prior_tox_a2, prior_eff_a1=prior_eff_a1,
+  prior_eff_a2=prior_eff_a2, n=75, cohort=3, time_full=7, poisson_rate=0.28,
+  nsim=1000)
 
-#sim2
+sim2
+}
 
 # Dummy example, running quickly
 useless = CombPlateau_sim(ndose_a1=2, ndose_a2=2,
-p_tox=matrix(c(0.05,0.10,0.15,0.25),nrow=2),
-p_eff=matrix(c(0.10,0.35,0.30,0.65),nrow=2), tox_max=0.35, eff_min=0.20,
-prior_tox_a1=c(0.1,0.3), prior_tox_a2=c(0.1,0.3), prior_eff_a1=c(0.2,0.4),
-prior_eff_a2=c(0.2,0.4),
-n=15, cohort=3, time_full=7, poisson_rate=1, nsim=1)
+  p_tox=matrix(c(0.05,0.10,0.15,0.25),nrow=2),
+  p_eff=matrix(c(0.10,0.35,0.30,0.65),nrow=2), tox_max=0.35, eff_min=0.20,
+  prior_tox_a1=c(0.1,0.3), prior_tox_a2=c(0.1,0.3), prior_eff_a1=c(0.2,0.4),
+  prior_eff_a2=c(0.2,0.4),
+  n=15, cohort=3, time_full=7, poisson_rate=1, nsim=1)
 }
