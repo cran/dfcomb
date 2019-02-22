@@ -1,8 +1,8 @@
 Package: dfcomb
 Type: Package
 Title: Phase I/II Adaptive Dose-Finding Design for Combination Studies
-Version: 2.5-0
-Date: 2018-05-24
+Version: 2.6-0
+Date: 2019-02-21
 Author: Marie-Karelle Riviere and Jacques-Henri Jourdan
 Maintainer: Jacques-Henri Jourdan <jacques-henri.jourdan@normalesup.org>
 Copyright: src/arms.c and src/arms.h are copyright Wally Gilks. All
@@ -18,6 +18,6 @@ Depends: R (>= 3.4.0)
 LinkingTo: RcppArmadillo (>= 0.7.100), BH (>= 1.55), RcppProgress (>=
         0.2.1), Rcpp
 NeedsCompilation: yes
-Packaged: 2018-05-24 12:44:44 UTC; jjourdan
+Packaged: 2019-02-21 23:07:44 UTC; jjourdan
 Repository: CRAN
-Date/Publication: 2018-05-24 17:34:52 UTC
+Date/Publication: 2019-02-22 08:40:03 UTC

@@ -23,25 +23,6 @@ using namespace std;
 
 namespace dfcomb { namespace logistic {
 
-struct datastru{
-  double d0, a0, b0, c0;
-  vector<double> dose_scale_1, dose_scale_2;
-  vector<vector<double> > pi, ptox, ptox_inf_targ, ptox_targ, ptox_sup_targ;
-  vector<vector<int> > y, n;
-  vector<bool> delta;
-  vector<int> dose_adm1, dose_adm2;
-  vector<double> time_ev, time_follow, time_min;
-  int pat_incl;
-  int cdose1, cdose2;
-
-  datastru(int NDOSE1, int NDOSE2) :
-    dose_scale_1(NDOSE1), dose_scale_2(NDOSE2),
-    pi(NDOSE1, vector<double>(NDOSE2)), ptox(NDOSE1, vector<double>(NDOSE2)),
-    ptox_inf_targ(NDOSE1, vector<double>(NDOSE2)), ptox_targ(NDOSE1, vector<double>(NDOSE2)), ptox_sup_targ(NDOSE1, vector<double>(NDOSE2)),
-    y(NDOSE1, vector<int>(NDOSE2)), n(NDOSE1, vector<int>(NDOSE2))
-  { }
-};
-
 enum para_ty {
   PARA_d0,
   PARA_a0,
@@ -56,6 +37,66 @@ double ESCP, DESP, ARRET, NMIN;
 
 std::minstd_rand r;
 
+struct datastru{
+  // Doses scales from priors
+  vector<double> dose_scale_1, dose_scale_2;
+
+  // Currently included patients
+  int pat_incl;
+  vector<vector<int> > y, n;
+  vector<bool> delta;
+  vector<int> dose_adm1, dose_adm2;
+  vector<double> time_ev, time_follow, time_min;
+
+  // Currently included dose
+  int cdose1, cdose2;
+
+  // Estimated parameters
+  double d0, a0, b0, c0;
+  vector<vector<double> > pi, ptox, ptox_inf_targ, ptox_targ, ptox_sup_targ;
+
+  datastru(int NDOSE1, int NDOSE2) :
+    dose_scale_1(NDOSE1), dose_scale_2(NDOSE2),
+    y(NDOSE1, vector<int>(NDOSE2)), n(NDOSE1, vector<int>(NDOSE2)),
+    pi(NDOSE1, vector<double>(NDOSE2)), ptox(NDOSE1, vector<double>(NDOSE2)),
+    ptox_inf_targ(NDOSE1, vector<double>(NDOSE2)), ptox_targ(NDOSE1, vector<double>(NDOSE2)), ptox_sup_targ(NDOSE1, vector<double>(NDOSE2))
+  { }
+
+  void new_trial() {
+    this->pat_incl = 0;
+    for(int i=0; i<NDOSE1; i++)
+      for(int j=0; j<NDOSE2; j++){
+        this->y[i][j]=0;
+        this->n[i][j]=0;
+      }
+    this->delta.clear();
+    this->dose_adm1.clear();
+    this->dose_adm2.clear();
+    if(TITE) {
+      this->time_ev.clear();
+      this->time_follow.clear();
+      this->time_min.clear();
+    }
+    this->cdose1 = 0;
+    this->cdose2 = 0;
+  }
+
+  void update_tite() {
+    this->delta.resize(this->pat_incl);
+    this->time_min.resize(this->pat_incl);
+
+    for(int i=0; i<NDOSE1; i++)
+      for(int j=0; j<NDOSE2; j++)
+        this->y[i][j] = 0;
+
+    for(int i=0; i<this->pat_incl; i++){
+      this->delta[i] = this->time_ev[i] <= min(this->time_follow[i], TIMEFULL);
+      this->time_min[i] = min(this->time_ev[i], min(this->time_follow[i],TIMEFULL));
+      this->y[this->dose_adm1[i]][this->dose_adm2[i]] += (int)this->delta[i];
+    }
+  }
+};
+
 // Cohort inclusion
 void genpopn(datastru * datapt, const vector<vector<double> >& piV){
   vector<double> time_incl_cohort(COHORT);
@@ -67,16 +108,13 @@ void genpopn(datastru * datapt, const vector<vector<double> >& piV){
     datapt->dose_adm1.push_back(datapt->cdose1);
     datapt->dose_adm2.push_back(datapt->cdose2);
     if(TITE) {
-      datapt->delta.push_back(false);
       double time_btw_incl = exp_rng(r, WEEK_incl);
       time_incl_cohort[i] = time_btw_incl;
       double time_tox = exp_rng(r, -log(1-pi_ij)/TIMEFULL);
       datapt->time_ev.push_back(time_tox);
       datapt->time_follow.push_back(0);
-      datapt->time_min.push_back(0);
-      for(int j=i; j>=0; j--){
-        datapt->time_follow[datapt->pat_incl+j] += time_incl_cohort[i];
-      }
+      for(int j = 0; j <= datapt->pat_incl+i; j++)
+        datapt->time_follow[j] += time_incl_cohort[i];
     } else {
       bool tox = uni_rng(r)<pi_ij;
       datapt->y[datapt->cdose1][datapt->cdose2] += (int)tox;
@@ -84,36 +122,10 @@ void genpopn(datastru * datapt, const vector<vector<double> >& piV){
     }
   }
 
-  if(TITE) {
-    for(int j=0; j<COHORT; j++){
-      for(int i=0; i<datapt->pat_incl; i++){
-        datapt->time_follow[i] += time_incl_cohort[j];
-      }
-    }
-  }
-
   datapt->n[datapt->cdose1][datapt->cdose2] += COHORT;
   datapt->pat_incl += COHORT;
 
-  if(TITE) {
-    if(datapt->pat_incl == COHORT*NCOHORT){
-      for(int i=0; i<datapt->pat_incl; i++){
-        datapt->time_follow[i] = INFINITY;
-      }
-    }
-
-    for(int i=0; i<NDOSE1; i++){
-      for(int j=0; j<NDOSE2; j++){
-        datapt->y[i][j] = 0;
-      }
-    }
-
-    for(int i=0; i<datapt->pat_incl; i++){
-      datapt->delta[i] = datapt->time_ev[i] <= min(datapt->time_follow[i], TIMEFULL);
-      datapt->time_min[i] = min(datapt->time_ev[i], min(datapt->time_follow[i],TIMEFULL));
-      datapt->y[datapt->dose_adm1[i]][datapt->dose_adm2[i]] += (int)datapt->delta[i];
-    }
-  }
+  if(TITE) datapt->update_tite();
 }
 
 
@@ -500,16 +512,7 @@ void logistic_sim(int* tite, int* ndose1, int* ndose2,
   // Trials simulations
   Progress prog(*ntrial);
   for(int trial=0; trial<*ntrial; trial++) {
-    data.pat_incl = 0;
-    for(int i=0; i<NDOSE1; i++){
-      for(int j=0; j<NDOSE2; j++){
-        data.y[i][j]=0;
-        data.n[i][j]=0;
-      }
-    }
-
-    data.cdose1 = 0;
-    data.cdose2 = 0;
+    data.new_trial();
 
     // Start-up phase
     startup(&data, piV);
@@ -532,21 +535,9 @@ void logistic_sim(int* tite, int* ndose1, int* ndose2,
     }
 
     if(TITE) {
-      for(int i=0; i<data.pat_incl; i++){
+      for(int i=0; i<data.pat_incl; i++)
         data.time_follow[i] = INFINITY;
-      }
-
-      for(int i=0; i<NDOSE1; i++){
-        for(int j=0; j<NDOSE2; j++){
-          data.y[i][j] = 0;
-        }
-      }
-
-      for(int i=0; i<data.pat_incl; i++){
-        data.delta[i] = data.time_ev[i] <= TIMEFULL;
-        data.time_min[i] = min(data.time_ev[i], TIMEFULL);
-        data.y[data.dose_adm1[i]][data.dose_adm2[i]] += (int)data.delta[i];
-      }
+      data.update_tite();
     }
 
     estimation(&data);
@@ -694,13 +685,13 @@ void logistic_next(int* tite, int* ndose1, int* ndose2,
         error("dfcomb : the final recommendation cannot be computed when "
               "all the patients have not been fully followed");
       data.time_follow.push_back(time_follow[i]);
-      data.time_min.push_back(min(time_ev[i], min(time_follow[i], TIMEFULL)));
-      data.delta.push_back(data.time_ev[i] <= min(time_follow[i], TIMEFULL));
     } else {
       data.delta.push_back(delta[i]);
+      data.y[dose_adm1[i]][dose_adm2[i]] += (int)data.delta[i];
     }
-    data.y[dose_adm1[i]][dose_adm2[i]] += (int)data.delta[i];
   }
+  if(TITE)
+    data.update_tite();
 
   // Startup
   if(!*trial_end && *in_startup)
