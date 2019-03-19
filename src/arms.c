@@ -340,10 +340,9 @@ void invert(double prob, ENVELOPE *env, POINT *p)
       p->y = ((p->x - xl)/(xr - xl)) * (yr - yl) + yl;
       p->ey = expshift(p->y, env->ymax);
     }
+    /* guard against imprecision yielding point outside interval */
+    if ((p->x < xl) || (p->x > xr)) { longjmp(jbuf, 1101); }
   }
-
-  /* guard against imprecision yielding point outside interval */
-  if ((p->x < xl) || (p->x > xr)) { longjmp(jbuf, 1101); }
 
   return;
 }
@@ -762,4 +761,3 @@ double perfunc(FUNBAG *lpdf, ENVELOPE *env, double x)
 }
 
 /* *********************************************************************** */
-

@@ -20,7 +20,6 @@ The DESCRIPTION file:
 Maintainer: \packageMaintainer{dfcomb}
 }
 \references{
-Riviere, MK, Yuan, Y, Dubois, F, Zohar, S (2014). A Bayesian dose-finding design for drug combination clinical trials based on the logistic model. Pharm Stat, 13, 4:247-57.
-Riviere, MK, Yuan, Y, Dubois, F, Zohar, S (2014). A Bayesian dose finding design for clinical trials combining a cytotoxic agent with a molecularly targeted agent. JRSS-C.
+Riviere MK, Yuan Y, Dubois F, Zohar S (2014). A Bayesian dose-finding design for drug combination clinical trials based on the logistic model. Pharm Stat, 13, 4:247-57.
 }
 \keyword{ package design survival }
