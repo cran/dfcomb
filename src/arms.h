@@ -47,7 +47,7 @@ typedef struct metropolis { /* for metropolis step */
 #define EYEPS 0.001              /* critical relative exp(y) difference */
 #define YCEIL 50.
 
-typedef double (*urand)();
+typedef double (*urand)(void);
 
 /* declarations for functions defined in this file */
 

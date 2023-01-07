@@ -1,7 +1,7 @@
 CombIncrease_sim = function(ndose_a1, ndose_a2, p_tox, target, target_min, target_max, prior_tox_a1, prior_tox_a2, n_cohort,
                         cohort, tite=FALSE, time_full=0, poisson_rate=0, nsim, c_e=0.85, c_d=0.45, c_stop=0.95, c_t=0.5,
                         c_over=0.25, cmin_overunder=2, cmin_mtd=3, cmin_recom=1, startup=1, alloc_rule=1, early_stop=1,
-                        nburn=2000, niter=5000, seed=14061991){
+                        init_dose_1=1, init_dose_2=1, nburn=2000, niter=5000, seed=14061991){
   c_d = 1-c_d
   dim_ptox = dim(p_tox)
 
@@ -42,6 +42,8 @@ CombIncrease_sim = function(ndose_a1, ndose_a2, p_tox, target, target_min, targe
   startup = as.integer(startup)[1]
   alloc_rule = as.integer(alloc_rule)[1]
   early_stop = as.integer(early_stop)[1]
+  init_dose_1 = as.integer(init_dose_1)[1]
+  init_dose_2 = as.integer(init_dose_2)[1]
   seed = as.integer(seed)[1]
   nburn = as.integer(nburn)[1]
   niter = as.integer(niter)[1]
@@ -88,6 +90,10 @@ CombIncrease_sim = function(ndose_a1, ndose_a2, p_tox, target, target_min, targe
   if(nburn <= 0 || niter <= 0){
     stop("Number of iterations and burn-in for MCMC must be positive.")
   }
+  if(init_dose_1 < 1 || init_dose_1 > ndose_a1 ||
+     init_dose_2 < 1 || init_dose_2 > ndose_a2) {
+      stop("The initial dose is invalid.")
+  }
   for(a1 in 1:ndose_a1){
     if(prior_tox_a1[a1] < 0 || prior_tox_a1[a1] > 1){
       stop("At least one of the initial guessed toxicity probability for agent 1 is not comprised between 0 and 1.")
@@ -128,8 +134,8 @@ CombIncrease_sim = function(ndose_a1, ndose_a2, p_tox, target, target_min, targe
   # Appeler fonction C
   logistic = .C(C_logistic_sim, tite, ndose_a1, ndose_a2, time_full, poisson_rate, p_tox, target,
     target_max, target_min, prior_tox_a1, prior_tox_a2, n_cohort, cohort, nsim, c_e, c_d, c_stop,
-    c_t, c_over, cmin_overunder, cmin_mtd, cmin_recom, seed, startup, alloc_rule, early_stop,
-    nburn, niter,
+    c_t, c_over, cmin_overunder, cmin_mtd, cmin_recom, seed, as.integer(init_dose_1-1), as.integer(init_dose_2-1),
+    startup, alloc_rule, early_stop, nburn, niter,
 
     rec_dose=rec_dose, n_pat_dose=n_pat_dose, n_tox_dose=n_tox_dose, inconc=inconc, early_conc=early_conc, tab_pat=tab_pat)
 
@@ -185,6 +191,8 @@ CombIncrease_sim = function(ndose_a1, ndose_a2, p_tox, target, target_min, targe
              cmin_overunder=cmin_overunder,
              cmin_mtd=cmin_mtd,
              cmin_recom=cmin_recom,
+             init_dose_1=init_dose_1,
+             init_dose_2=init_dose_2,
              nburn=nburn,
              niter=niter,
              seed=seed,

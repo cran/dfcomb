@@ -14,6 +14,7 @@ void logistic_sim(int* tite,
                   double* ctarg, double* cover,
                   int* coh_min, int* coh_stop_early, int* coh_fin,
                   int* seed,
+                  int* init_dose1, int* init_dose2,
                   int* startup, int* alloc_rule_id, int* early_finding_rule_id,
                   int* nburn, int* niter,
 

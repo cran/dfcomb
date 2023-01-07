@@ -10,7 +10,7 @@ CombIncrease_sim(ndose_a1, ndose_a2, p_tox, target, target_min, target_max,
   prior_tox_a1, prior_tox_a2, n_cohort, cohort, tite=FALSE, time_full=0,
   poisson_rate=0, nsim, c_e=0.85, c_d=0.45, c_stop=0.95, c_t=0.5, c_over=0.25,
   cmin_overunder=2, cmin_mtd=3, cmin_recom=1, startup=1, alloc_rule=1,
-  early_stop=1, nburn=2000, niter=5000, seed=14061991)
+  early_stop=1, init_dose_1=1, init_dose_2=1, nburn=2000, niter=5000, seed=14061991)
 }
 \arguments{
   \item{ndose_a1}{Number of dose levels for agent 1.}
@@ -38,16 +38,18 @@ CombIncrease_sim(ndose_a1, ndose_a2, p_tox, target, target_min, target_max,
   \item{startup}{Interger (0, 1, 2, or 3) indicating which start-up phase is used (see details). The default value is set at 1.}
   \item{alloc_rule}{Interger (1, 2, or 3) indicating which allocation rule is used (see details). The default value is set at 1.}
   \item{early_stop}{Interger (1, 2, or 3) indicating which early stopping rule is used (see details). The default value is set at 1.}
+  \item{init_dose_1}{Initial dose for agent 1. The default is 1.}
+  \item{init_dose_2}{Initial dose for agent 2. The default is 1.}
   \item{nburn}{Number of burn-in for HMC. The default value is set at 2000.}
   \item{niter}{Number of iterations for HMC. The default value is set at 5000.}
   \item{seed}{Seed of the random number generator. Default value is set at 14061991.}}
 \details{
 Start-up phase:
 \itemize{
-  \item \code{startup=0}: No startup phase.
-  \item \code{startup=1} (Riviere et al 2014): Begin at the lowest combination (1,1) and increase both agent (+1, +1) until the first toxicity is observed or maximum combination is reached.
-  \item \code{startup=2}: Begin at the lowest combination (1,1) and increase agent 1 (+1, 0) until a toxicity is observed or maximum dose is reached. Then begin at (1,2) and increase agent 2 (0, +1) until a toxicity is observed or maximum dose is reached.
-  \item \code{startup=3}: Begin at the lowest combination (1,1) and increase alternatively each agent (+1, 0) then (0, +1) until the first toxicity is observed or maximum combination is reached.
+  \item \code{startup=0}: No startup phase: the first tested combination is forced to be the initial combination. The following ones use the normal allocation rule..
+  \item \code{startup=1} (Riviere et al 2014): Begin at the initial combination and increase both agent (+1, +1) until the first toxicity is observed or maximum combination is reached.
+  \item \code{startup=2}: Begin at the initial combination and increase agent 1 (+1, 0) until a toxicity is observed or maximum dose is reached. Then begin at (init_dose1,init_dose2+1) and increase agent 2 (0, +1) until a toxicity is observed or maximum dose is reached.
+  \item \code{startup=3}: Begin at the initial combination and increase alternatively each agent (+1, 0) then (0, +1) until the first toxicity is observed or maximum combination is reached.
 }
 
 Allocation rule:
@@ -106,8 +108,8 @@ prior_a1 = c(0.12, 0.2, 0.3, 0.4, 0.5)
 prior_a2 = c(0.2, 0.3, 0.4)
 
 sim1 = CombIncrease_sim(ndose_a1=5, ndose_a2=3, p_tox=p_tox_sc1, target=0.30,
-  target_min=0.20, target_max=0.40, prior_tox_a1=prior_tox_a1,
-  prior_tox_a2=prior_tox_a2, n_cohort=20, cohort=3, tite=FALSE, nsim=2000,
+  target_min=0.20, target_max=0.40, prior_tox_a1=prior_a1,
+  prior_tox_a2=prior_a2, n_cohort=20, cohort=3, tite=FALSE, nsim=2000,
   c_over=1, cmin_overunder=3, cmin_recom=1, startup=1, alloc_rule=1,
   early_stop=1, seed=14061991)
 sim1

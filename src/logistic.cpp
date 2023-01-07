@@ -31,6 +31,7 @@ enum para_ty {
   PARA_c0
 } PARA;
 int NDOSE1, NDOSE2;
+int INIT_DOSE1, INIT_DOSE2;
 double TARGET, TARGET_MIN, TARGET_MAX, WEEK_incl, TIMEFULL;
 int NCOHORT, COHORT;
 bool TITE;
@@ -86,8 +87,8 @@ struct datastru{
       this->time_follow.clear();
       this->time_min.clear();
     }
-    this->cdose1 = 0;
-    this->cdose2 = 0;
+    this->cdose1 = INIT_DOSE1;
+    this->cdose2 = INIT_DOSE2;
   }
 
   void update_tite() {
@@ -143,8 +144,9 @@ void genpopn(datastru * datapt, const vector<vector<double> >& piV){
 }
 
 // Start-up phase
-// Pas de startup
+// Startup limitée à la toute première dose.
 void startup0(datastru *datapt, const vector<vector<double> >& piV){
+  genpopn(datapt, piV);
 }
 
 
@@ -174,9 +176,9 @@ void startup2(datastru *datapt, const vector<vector<double> >& piV){
       break;
     datapt->cdose1++;
   }
-  if(NDOSE2 > 1 && !datapt->y[0][0]) {
-    datapt->cdose1 = 0;
-    datapt->cdose2 = 1;
+  if(NDOSE2 > INIT_DOSE2+1 && !datapt->y[0][0]) {
+    datapt->cdose1 = INIT_DOSE1;
+    datapt->cdose2 = INIT_DOSE2+1;
     while(true) {
       genpopn(datapt, piV);
       if(datapt->cdose2 == NDOSE2-1)
@@ -326,8 +328,7 @@ void estimation(datastru * datapt){
       PARA = PARA_d0;
       err = arms_simple(ninit, &d0L, &d0R, density, datapt, dometrop, &d0prev, &d0samp, u_random);
       if(err>0) {
-        char buf[100]; sprintf(buf, "%d", err);
-        throw std::logic_error(string("arms internal error (d0): ") + string(buf));
+        throw std::logic_error(string("arms internal error (d0): ") + to_string(err));
       }
       datapt->d0 = d0samp;
       d0prev2 = d0prev;
@@ -336,8 +337,7 @@ void estimation(datastru * datapt){
       PARA = PARA_a0;
       err = arms_simple(ninit, &a0L, &a0R, density, datapt, dometrop, &a0prev, &a0samp, u_random);
       if(err>0) {
-        char buf[100]; sprintf(buf, "%d", err);
-        throw std::logic_error(string("arms internal error (a0): ") + string(buf));
+        throw std::logic_error(string("arms internal error (a0): ") + to_string(err));
       }
       datapt->a0 = a0samp;
       a0prev2 = a0prev;
@@ -346,8 +346,7 @@ void estimation(datastru * datapt){
       PARA = PARA_b0;
       err = arms_simple(ninit, &b0L, &b0R, density, datapt, dometrop, &b0prev, &b0samp, u_random);
       if(err>0) {
-        char buf[100]; sprintf(buf, "%d", err);
-        throw std::logic_error(string("arms internal error (b0): ") + string(buf));
+        throw std::logic_error(string("arms internal error (b0): ") + to_string(err));
       }
       datapt->b0 = b0samp;
       b0prev2 = b0prev;
@@ -356,8 +355,7 @@ void estimation(datastru * datapt){
       PARA = PARA_c0;
       err = arms_simple(ninit, &c0L, &c0R, density, datapt, dometrop, &c0prev, &c0samp, u_random);
       if(err>0) {
-        char buf[100]; sprintf(buf, "%d", err);
-        throw std::logic_error(string("arms internal error (c0): ") + string(buf));
+        throw std::logic_error(string("arms internal error (c0): ") + to_string(err));
       }
       datapt->c0 = c0samp;
       c0prev2 = c0prev;
@@ -615,13 +613,14 @@ R_NativePrimitiveArgType logistic_sim_args[] =
    REALSXP, REALSXP,
    INTSXP, INTSXP, INTSXP,
    INTSXP,
+   INTSXP, INTSXP,
    INTSXP, INTSXP, INTSXP,
    INTSXP, INTSXP,
 
    REALSXP, REALSXP, REALSXP,
    REALSXP, REALSXP,
    REALSXP};
-const int logistic_sim_nargs = 34;
+const int logistic_sim_nargs = 36;
 
 void logistic_sim(int* tite,
                   int* ndose1, int* ndose2,
@@ -634,6 +633,7 @@ void logistic_sim(int* tite,
                   double* ctarg, double* cover,
                   int* coh_min, int* coh_stop_early, int* coh_fin,
                   int* seed,
+                  int* init_dose1, int* init_dose2,
                   int* startup, int* alloc_rule_id, int* early_finding_rule_id,
                   int* nburn, int* niter,
 
@@ -663,6 +663,9 @@ void logistic_sim(int* tite,
 
   NDOSE1 = *ndose1;
   NDOSE2 = *ndose2;
+
+  INIT_DOSE1 = *init_dose1;
+  INIT_DOSE2 = *init_dose2;
 
   struct datastru data(NDOSE1, NDOSE2, prior_1, prior_2);
 
