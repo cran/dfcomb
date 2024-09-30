@@ -771,8 +771,8 @@ void logistic_sim(int* tite,
   *inconc_rat = (double)inconc / *ntrial;
   *early_finding_rat = (double)early_finding / *ntrial;
   }
-  catch (std::logic_error &e) { error("Internal error in dfcomb (details: %s)", e.what()); }
-  catch (...) { error("Internal error in dfcomb"); }
+  catch (std::logic_error &e) { Rf_error("Internal error in dfcomb (details: %s)", e.what()); }
+  catch (...) { Rf_error("Internal error in dfcomb"); }
 
   return;
 }
@@ -863,7 +863,7 @@ void logistic_next(int* tite,
     if(TITE) {
       data.time_ev.push_back(time_ev[i]);
       if(*trial_end && time_follow[i] < TIMEFULL)
-        error("dfcomb : the final recommendation cannot be computed when "
+        Rf_error("dfcomb : the final recommendation cannot be computed when "
               "all the patients have not been fully followed");
       data.time_follow.push_back(time_follow[i]);
     } else {
@@ -899,6 +899,6 @@ void logistic_next(int* tite,
   *cdose1 = data.cdose1;
   *cdose2 = data.cdose2;
   }
-  catch (std::logic_error &e) { error("Internal error in dfcomb (details: %s)", e.what()); }
-  catch (...) { error("Internal error in dfcomb"); }
+  catch (std::logic_error &e) { Rf_error("Internal error in dfcomb (details: %s)", e.what()); }
+  catch (...) { Rf_error("Internal error in dfcomb"); }
 }

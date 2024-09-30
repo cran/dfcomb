@@ -1,10 +1,15 @@
 Package: dfcomb
 Type: Package
 Title: Phase I/II Adaptive Dose-Finding Design for Combination Studies
-Version: 3.1-1
-Date: 2022-12-26
-Author: Marie-Karelle Riviere and Jacques-Henri Jourdan
-Maintainer: Jacques-Henri Jourdan <jacques-henri.jourdan@normalesup.org>
+Version: 3.1-4
+Date: 2024-09-30
+Authors@R: c(person(given = "Marie-Karelle",
+                      family = "Riviere",
+                      role = "aut"),
+               person(given = "Jacques-Henri",
+                      family = "Jourdan",
+                      role = c("aut", "cre"),
+                      email = "jacques-henri.jourdan@cnrs.fr"))
 Copyright: src/arms.c and src/arms.h are copyright Wally Gilks. All
         other files are copyright Sanofi-Aventis R&D, Institut de
         Recherches Internationales Servier and Institut national de la
@@ -15,6 +20,9 @@ License: GPL-3
 Depends: R (>= 3.2.3)
 LinkingTo: BH (>= 1.55), Rcpp, RcppProgress (>= 0.2.1)
 NeedsCompilation: yes
-Packaged: 2022-12-26 11:36:47 UTC; jjourdan
+Packaged: 2024-09-30 15:13:53 UTC; jjourdan
+Author: Marie-Karelle Riviere [aut],
+  Jacques-Henri Jourdan [aut, cre]
+Maintainer: Jacques-Henri Jourdan <jacques-henri.jourdan@cnrs.fr>
 Repository: CRAN
-Date/Publication: 2023-01-07 14:20:09 UTC
+Date/Publication: 2024-09-30 15:50:04 UTC
