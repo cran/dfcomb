@@ -1,7 +1,7 @@
-7d0ff6745b34f9387504d8dae4f898eb *DESCRIPTION
+eb6c66fb7043a23951817b65ea1462c6 *DESCRIPTION
 12bab2eb1863a8d3a4985fde5959b152 *NAMESPACE
 2b2d8145599cd3a89a29ce32785dfc95 *R/dfcomb.R
-d24b8dc393feb3b07c02e6b82ec46992 *build/partial.rdb
+20e79ab6e38f0431760c22586526fced *build/partial.rdb
 8e33c90de882e6a01ab2640d36adb43b *man/CombIncrease_next.Rd
 7efb5f7fb9c04d8d4f85399b273c588e *man/CombIncrease_sim.Rd
 85320ff5c71603fd8cb690e86c480774 *man/dfcomb-package.Rd
@@ -9,4 +9,4 @@ bb48f0b155b632b20721c7f0c766283c *src/arms.c
 fd439bf188f177b2e87b00d225d05823 *src/arms.h
 dc61553bc9f834e9c171bb59149b85a3 *src/dfcomb.c
 1022f6831ce04ab6496eb8e36adec540 *src/dfcomb.h
-bb4ca4b1a3c23a1dd4170eaef265c690 *src/logistic.cpp
+a202ce9a8bdd6fdc32110c29f81ad460 *src/logistic.cpp
